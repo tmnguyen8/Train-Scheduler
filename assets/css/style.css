@@ -19,9 +19,31 @@
     margin: 0;
     
 }
+.info-section {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
 
 .input-section {
     padding-top: 20px;
     padding-bottom: 20px;
 
 }
+#current-train {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#current-train td, #current-train th {
+    border-bottom: 1px solid rgb(133, 129, 129);
+    padding: 8px;
+}
+  
+#current-train tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+  
+#current-train tr:hover {
+    background-color: #ddd;
+}
+  

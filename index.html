@@ -7,20 +7,14 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <!-- Firebase -->
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-        https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-analytics.js"></script>
     <title>Train Scheduler</title>
 </head>
 <body>
     <div class="jumbotron banner container">
         <div class="navbar-header">
             <h1>Anytime is Train Time</h1>
-            <h3>Choo Choo. Chee Chee</h3>
+            <h3>Choo Choo. Chee Chee.</h3>
         </div>
     </div>
 
@@ -30,7 +24,15 @@
         </div>
 
         <div class="jumbotron container info-section">
-
+            <table id="current-train">
+                <tr>
+                    <th>Train Name</th>
+                    <th>Destination</th>
+                    <th>Frequency (min)</th>
+                    <th>Next Arrival</th>
+                    <th>Minutes Away</th>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -59,14 +61,20 @@
                     <input type="text" class="form-control" id="frequency" placeholder="Enter Frequency">
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" id="submit">Submit</button>
             </form>
         </div>
     </div>
     
 
     <!-- JQUERY and Javascript -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+  <!-- LINKS FOR FIREBASE GO HERE -->
+  <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
     <script src="./assets/js/app.js"></script>
 </body>
 </html>
