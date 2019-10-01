@@ -58,25 +58,48 @@ function getFirstMin (firstTime) {
     return parseInt(firstTime.split(":")[1]);
 }
 
+
+function formatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+}
+
+function isMilitaryTime(time) {
+    var num = "1234567890"
+    if ((time.length !== 5) || (time.slice(0,2)%1 !== 0) || (time.slice(3,5)%1 !== 0)) {
+        alert("You have entered an invalid value for First Train Time. Please enter time in (HH:mm - military time)")
+        return false;
+    }else {
+        return true;
+    }
+};
+
 // EVENTS & EXECUTION
 // *******************************
 $("#submit").on("click", function(event) {
     // Don't refresh the page!
     event.preventDefault();
-
+    
     // Code in the logic for storing and retrieving data
-    // Don't forget to provide initial data to your Firebase database.
     trainName = $("#train-name").val().trim();
     destination = $("#destination").val().trim();
     firstTime = $("#first-train-time").val().trim();
-
     frequency = $("#frequency").val().trim();
 
-    var newTrain = new train(trainName, destination, firstTime, frequency, firebase.database.ServerValue.TIMESTAMP);
-
-    database.ref().push(
-        newTrain
-    );
+    // check if all inputs are valid first before storing the values to firebase
+    if (isMilitaryTime(firstTime)) {
+        var newTrain = new train(trainName, destination, firstTime, frequency, firebase.database.ServerValue.TIMESTAMP);
+        // pushing the data back to firebase database
+        database.ref().push(
+            newTrain
+        );
+    };
 });
 
 // Firebase watcher + initial loader HINT: This code behaves similarly to .on("value")
@@ -90,13 +113,16 @@ database.ref().on("child_added", function(childSnapshot) {
     var firstMin = getFirstMin(childSnapshot.val().firstTime);
     var arrival = getNextArrival(firstHr, firstMin, childSnapshot.val().frequency);
 
+    // formatted version of time
+    var formattedArrival = formatAMPM(arrival);
+    var formattedCurrentTime = formatAMPM(today);
 
-    var formattedArrival = (arrival.getHours() + ":" + arrival.getMinutes());
-    var minAway = arrival.getMinutes() - today.getMinutes();
+    // total minutes away
+    var minAway = (arrival.getHours() - today.getHours())*60 + (arrival.getMinutes() - today.getMinutes());
 
     // TESTING & DEBUGGING
     console.log(`
-    ${childSnapshot.val().name} | ${childSnapshot.val().destination} | freq = ${childSnapshot.val().frequency} | arrival = ${formattedArrival} | min away = ${minAway} | first time = ${childSnapshot.val().firstTime} | currentTime = ${currentTime}`);
+    ${childSnapshot.val().name} | ${childSnapshot.val().destination} | freq = ${childSnapshot.val().frequency} | arrival = ${formattedArrival} | min away = ${minAway} | first time = ${childSnapshot.val().firstTime} | currentTime = ${formattedCurrentTime}`);
 
     // append html to DOM
     $("#current-train").append(`
