@@ -16,11 +16,8 @@ var database = firebase.database();
 
 var trainName = "";
 var destination = "";
-var firstHr = 0;
-var firstMin = 0;
 var firstTime = "";
 var frequency = 0;
-var arrival = "";
 
 class train {
     constructor(name, destination, firstTime, frequency, dateAdded) {
@@ -85,20 +82,18 @@ $("#submit").on("click", function(event) {
 database.ref().on("child_added", function(childSnapshot) {
     // get current time and date
     var today = new Date();
-
     var currentTime = today.getHours() + ":" + today.getMinutes();
-    console.log(`current time is `, currentTime);
+
     
-    firstHr = getFirstHr(childSnapshot.val().firstTime);
-    firstMin = getFirstMin(childSnapshot.val().firstTime);
-    arrival = getNextArrival(firstHr, firstMin, childSnapshot.val().frequency);
+    var firstHr = getFirstHr(childSnapshot.val().firstTime);
+    var firstMin = getFirstMin(childSnapshot.val().firstTime);
+    var arrival = getNextArrival(firstHr, firstMin, childSnapshot.val().frequency);
 
 
     var formattedArrival = (arrival.getHours() + ":" + arrival.getMinutes());
     var minAway = arrival.getMinutes() - today.getMinutes();
 
-    console.log(`arrival min = ${arrival.getMinutes()} | current min = ${today.getMinutes()}`);
-    // Log everything that's coming out of snapshot
+    // TESTING & DEBUGGING
     console.log(`
     ${childSnapshot.val().name} | ${childSnapshot.val().destination} | freq = ${childSnapshot.val().frequency} | arrival = ${formattedArrival} | min away = ${minAway} | first time = ${childSnapshot.val().firstTime} | currentTime = ${currentTime}`);
 
