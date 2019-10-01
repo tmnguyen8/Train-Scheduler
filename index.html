@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <!-- Firebase -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-analytics.js"></script>
+    <title>Train Scheduler</title>
+</head>
+<body>
+    <div class="jumbotron banner container">
+        <div class="navbar-header">
+            <h1>Anytime is Train Time</h1>
+            <h3>Choo Choo. Chee Chee</h3>
+        </div>
+    </div>
+
+    <div class="jumbotron container my-section">
+        <div class="jumbotron container-fluid header-section">
+            <h5>Current Train Schedule</h4>
+        </div>
+
+        <div class="jumbotron container info-section">
+
+        </div>
+    </div>
+
+  
+    <div class="jumbotron container my-section">
+        <div class="jumbotron container-fluid header-section">
+            <h5>Add Train</h4>
+        </div>
+
+        <div class="jumbotron container input-section">
+            <form>
+                <div class="form-group">
+                    <label for="train-name">Train Name</label>
+                    <input type="text" class="form-control" id="train-name"  placeholder="Enter Train Name">
+                </div>
+                <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <input type="text" class="form-control" id="destination" placeholder="Enter Destination">
+                </div>
+                <div class="form-group">
+                    <label for="first-train-time">First Train Time (HH:mm - military time)</label>
+                    <input type="text" class="form-control" id="first-train-time" placeholder="Enter First Train Time">
+                </div>
+                <div class="form-group">
+                    <label for="frequency">Frequency (min)</label>
+                    <input type="text" class="form-control" id="frequency" placeholder="Enter Frequency">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    
+
+    <!-- JQUERY and Javascript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>
