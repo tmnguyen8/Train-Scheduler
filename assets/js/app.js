@@ -39,8 +39,13 @@ function getNextArrival(firstHr, firstMin, frequency) {
     firstTime.setHours(firstHr);
     firstTime.setMinutes(firstMin);
  
+    // setting arrival time
     var arrival = new Date();
-    arrival.setMinutes(firstTime.getMinutes() + minIncrement*frequency);
+    var totalArrival = firstTime.getHours()*60+ firstTime.getMinutes() + minIncrement*frequency;
+    arrivalHr = totalArrival/60;
+    arrivalMin = totalArrival%60;
+    arrival.setHours(arrivalHr);
+    arrival.setMinutes(arrivalMin);
 
     return arrival;
 }
@@ -55,8 +60,6 @@ function getFirstMin (firstTime) {
 
 // EVENTS & EXECUTION
 // *******************************
-
-
 $("#submit").on("click", function(event) {
     // Don't refresh the page!
     event.preventDefault();
@@ -66,8 +69,6 @@ $("#submit").on("click", function(event) {
     trainName = $("#train-name").val().trim();
     destination = $("#destination").val().trim();
     firstTime = $("#first-train-time").val().trim();
-
-    
 
     frequency = $("#frequency").val().trim();
 
