@@ -31,6 +31,7 @@ class train {
 
 // FUNCTIONS
 // *******************************
+// function to get the arrival time
 function getNextArrival(firstHr, firstMin, frequency) {
     var currentTime = new Date();
     var minIncrement = Math.ceil(((currentTime.getHours()-firstHr)*60 + (currentTime.getMinutes()-firstMin))/frequency) ;
@@ -49,16 +50,15 @@ function getNextArrival(firstHr, firstMin, frequency) {
 
     return arrival;
 }
-
+// function to get the first time hour
 function getFirstHr (firstTime) {
     return parseInt(firstTime.split(":")[0]);
 }
-
+// function to get the first time minutes
 function getFirstMin (firstTime) {
     return parseInt(firstTime.split(":")[1]);
 }
-
-
+// function to format military time to AM / PM time
 function formatAMPM(date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
@@ -69,17 +69,25 @@ function formatAMPM(date) {
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
 }
-
+// funtion to check if the input is military time format
 function isMilitaryTime(time) {
     var num = "1234567890"
-    if ((time.length !== 5) || (time.slice(0,2)%1 !== 0) || (time.slice(3,5)%1 !== 0)) {
+    if ((time.length !== 5) || (time.slice(0,2)%1 !== 0) || (time.slice(3,5)%1 !== 0) || time.slice(0,2)>24 || time.slice(3,5)>60) {
         alert("You have entered an invalid value for First Train Time. Please enter time in (HH:mm - military time)")
         return false;
     }else {
         return true;
     }
 };
-
+// function to check if the input is minute for frequency
+function isValidFreq(min) {
+    if (min <= 60 && min>=0) {
+        return true;
+    } else {
+        alert("You have entered an invalid value for frequency minute.")
+        return false;
+    }
+}
 // EVENTS & EXECUTION
 // *******************************
 $("#submit").on("click", function(event) {
@@ -93,7 +101,7 @@ $("#submit").on("click", function(event) {
     frequency = $("#frequency").val().trim();
 
     // check if all inputs are valid first before storing the values to firebase
-    if (isMilitaryTime(firstTime)) {
+    if (isMilitaryTime(firstTime) && isValidFreq(frequency)) {
         var newTrain = new train(trainName, destination, firstTime, frequency, firebase.database.ServerValue.TIMESTAMP);
         // pushing the data back to firebase database
         database.ref().push(
