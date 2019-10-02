@@ -59,16 +59,17 @@ function getFirstMin (firstTime) {
     return parseInt(firstTime.split(":")[1]);
 }
 // function to format military time to AM / PM time
-function formatAMPM(date) {
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? 'pm' : 'am';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
-    return strTime;
-}
+// ****** NOT USED - USE MOMENT.JS INSTEAD *********
+// function formatAMPM(date) {
+//     var hours = date.getHours();
+//     var minutes = date.getMinutes();
+//     var ampm = hours >= 12 ? 'pm' : 'am';
+//     hours = hours % 12;
+//     hours = hours ? hours : 12; // the hour '0' should be '12'
+//     minutes = minutes < 10 ? '0'+minutes : minutes;
+//     var strTime = hours + ':' + minutes + ' ' + ampm;
+//     return strTime;
+// }
 // funtion to check if the input is military time format
 function isMilitaryTime(time) {
     var num = "1234567890"
@@ -104,9 +105,7 @@ $("#submit").on("click", function(event) {
     if (isMilitaryTime(firstTime) && isValidFreq(frequency)) {
         var newTrain = new train(trainName, destination, firstTime, frequency, firebase.database.ServerValue.TIMESTAMP);
         // pushing the data back to firebase database
-        database.ref("train-scheduler").push(
-            newTrain
-        );
+        database.ref("train-scheduler").push(newTrain);
     };
 });
 
@@ -122,8 +121,8 @@ database.ref("train-scheduler").on("child_added", function(childSnapshot) {
     var arrival = getNextArrival(firstHr, firstMin, childSnapshot.val().frequency);
 
     // formatted version of time
-    var formattedArrival = formatAMPM(arrival);
-    var formattedCurrentTime = formatAMPM(today);
+    var formattedArrival = moment(arrival).format('h:mm a');
+    var formattedCurrentTime = moment(today).format('h:mm a');
 
     // total minutes away
     var minAway = (arrival.getHours() - today.getHours())*60 + (arrival.getMinutes() - today.getMinutes());
