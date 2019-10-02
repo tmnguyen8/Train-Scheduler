@@ -104,14 +104,14 @@ $("#submit").on("click", function(event) {
     if (isMilitaryTime(firstTime) && isValidFreq(frequency)) {
         var newTrain = new train(trainName, destination, firstTime, frequency, firebase.database.ServerValue.TIMESTAMP);
         // pushing the data back to firebase database
-        database.ref().push(
+        database.ref("train-scheduler").push(
             newTrain
         );
     };
 });
 
 // Firebase watcher + initial loader HINT: This code behaves similarly to .on("value")
-database.ref().on("child_added", function(childSnapshot) {
+database.ref("train-scheduler").on("child_added", function(childSnapshot) {
     // get current time and date
     var today = new Date();
     var currentTime = today.getHours() + ":" + today.getMinutes();

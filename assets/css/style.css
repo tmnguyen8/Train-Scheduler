@@ -1,7 +1,13 @@
 .banner {
     text-align: center;
-    background-color: rgb(127,70,44);
+    background-image: url(/assets/images/train.jpg);
     color: white;
+}
+.navbar-header {
+    background-color: rgba(125, 130, 134, 0.7);
+    width: 100%;
+    height: 100%;
+    margin: 0;
 }
 .my-section {
     padding: 0;
