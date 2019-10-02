@@ -1,6 +1,6 @@
 .banner {
     text-align: center;
-    background-image: url(/assets/images/train.jpg);
+    background-image: url(https://raw.githubusercontent.com/tmnguyen8/Train-Scheduler/master/assets/images/train.jpg);
     background-size: cover;
     min-height: 200px;
     color: white;
