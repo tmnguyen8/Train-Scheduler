@@ -64,4 +64,18 @@
 #current-train tr:hover {
     background-color: #ddd;
 }
+i {
+    padding: 0 10px;
+}
+
+.result-form{
+    border: 0;
+    background-color: #f2f2f2;
+    color: blue;
+    font-weight: bold;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: black;
+    opacity: 1; /* Firefox */
+  }
   

@@ -134,15 +134,57 @@ database.ref("train-scheduler").on("child_added", function(childSnapshot) {
     // append html to DOM
     $("#current-train").append(`
         <tr>
-            <th>${childSnapshot.val().name}</th>
-            <th>${childSnapshot.val().destination}</th>
-            <th>${childSnapshot.val().frequency}</th>
+            <th><input class="result-form trainName-${childSnapshot.key}" placeholder="${childSnapshot.val().name}"></th>
+            <th><input class="result-form trainDestination-${childSnapshot.key}" placeholder="${childSnapshot.val().destination}"></th>
+            <th><input class="result-form trainFrequency-${childSnapshot.key}" placeholder="${childSnapshot.val().frequency}"></th>
             <th>${formattedArrival}</th>
             <th>${minAway}</th>
+            <th>
+                <i class="fas fa-trash-alt delete" data-delete="${childSnapshot.key}"></i>
+                    
+                <i class="fas fa-edit edit" data-edit="${childSnapshot.key}" 
+                data-destination="${childSnapshot.val().destination}" 
+                data-first-time="${childSnapshot.val().firstTime}" 
+                data-frequency="${childSnapshot.val().frequency}" 
+                data-name="${childSnapshot.val().name}">
+                
+                </i>
+            </th>
+
         </tr>
-        `);
+    `);
+
 
     // Handle the errors
     }, function(errorObject) {
     console.log("Errors handled: " + errorObject.code);
+});
+
+// On click delete to remove the entry in firebase and reload the page
+$(document).on("click", ".delete", function() {
+    var dataId = $(this).data("delete");
+    database.ref("train-scheduler").child(dataId).remove();
+    // reload the page
+    location.reload();
+});
+// on click edit to modify name, destination, frequency on firebase and reload the page
+$(document).on("click", ".edit", function() {
+    var dataId = $(this).data("edit");
+    var firstTime = $(this).data("first-time");
+    var newTrainName = $(`.trainName-${dataId}`).val();
+    var newTrainDestination = $(`.trainDestination-${dataId}`).val();
+    var newTrainFrequency = $(`.trainFrequency-${dataId}`).val();
+
+    // check if all inputs are valid first before storing the values to firebase
+    if ((newTrainName==="")||(newTrainDestination==="")||(newTrainFrequency==="")) {
+        alert("Invalid edit entry. Please try again.");
+    } else if (isValidFreq(frequency)){
+        console.log(`${newTrainName} | ${newTrainDestination} | ${firstTime}| ${newTrainFrequency}`);
+        var newTrain = new train(newTrainName, newTrainDestination, firstTime, newTrainFrequency, firebase.database.ServerValue.TIMESTAMP);
+        // pushing the data back to firebase database
+        database.ref("train-scheduler").child(dataId).set(newTrain);
+    };
+    // reload the page
+    location.reload();
+    
 });
