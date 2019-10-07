@@ -40,11 +40,16 @@
 .info-section {
     padding-top: 20px;
     padding-bottom: 20px;
+    
+}
+.my-shadow {
+    box-shadow: 9px 20px 10px rgba(0,0,0,0.5);
 }
 
 .input-section {
     padding-top: 20px;
     padding-bottom: 20px;
+    
 
 }
 #current-train {
